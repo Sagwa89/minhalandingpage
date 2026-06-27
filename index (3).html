@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Portfólio de Júlia Hendler - Criação de sites profissionais e escrita de projetos culturais.">
+    <title>Júlia Hendler - Criação de Sites</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Sora', sans-serif;
+            background-color: #FBFBFD; /* Branco "Apple", levemente mais confortável que o branco puro */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 60px 20px;
+            color: #1D1D1F; /* Preto suave para leitura perfeita */
+            position: relative;
+        }
+
+        /* Textura de Ondas Ultra Sutis */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2064&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(100%) invert(100%) opacity(0.12); /* Opacidade reduzida para máxima elegância */
+            z-index: -3;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+            width: 100%;
+            max-width: 980px;
+        }
+
+        .item-island { grid-column: span 2; display: flex; justify-content: center; margin-bottom: 24px; }
+
+        /* Pílula superior refinada */
+        #dinamic-island {
+            background: rgba(255, 255, 255, 0.7); 
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); 
+            border-radius: 100rem;
+            width: max-content;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #1D1D1F;
+            padding: 6px 26px 6px 6px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0,0,0,0.02);
+            border: 1px solid rgba(255, 255, 255, 0.8); 
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        #dinamic-island:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0,0,0,0.03);
+        }
+
+        .island-avatar-wrap {
+            position: relative;
+            display: flex;
+            flex-shrink: 0;
+        }
+
+        #dinamic-island img { 
+            width: 44px; 
+            height: 44px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            border: 1.5px solid rgba(255,255,255,0.9);
+        }
+
+        /* Indicador de "disponível" - reforça confiança sem poluir */
+        .status-dot {
+            position: absolute;
+            bottom: -1px;
+            right: -1px;
+            width: 12px;
+            height: 12px;
+            background: #30D158;
+            border-radius: 50%;
+            border: 2px solid #FBFBFD;
+        }
+
+        .island-text {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            line-height: 1.25;
+        }
+
+        .island-text strong {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .island-text span {
+            font-size: 12px;
+            font-weight: 500;
+            color: #6E6E73;
+        }
+
+        /* Cartões Premium */
+        .card-link {
+            position: relative;
+            overflow: hidden;
+            color: #1D1D1F; 
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; 
+            text-align: left;
+            border-radius: 36px; /* Bordas levemente mais arredondadas */
+            padding: 44px 36px;
+            
+            /* Sombra ultra-suave + Relevo de vidro lapidado */
+            box-shadow: 
+                0 16px 40px rgba(0, 0, 0, 0.06), 
+                0 2px 10px rgba(0, 0, 0, 0.02),
+                inset 0 1px 1px rgba(255, 255, 255, 0.8); 
+            border: 1px solid rgba(255, 255, 255, 0.5); 
+            
+            /* Transição Apple-like (movimento orgânico) */
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1;
+        }
+
+        /* Imagem de Fundo */
+        .card-link::before {
+            content: '';
+            position: absolute;
+            top: -15px; left: -15px; right: -15px; bottom: -15px;
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            transition: filter 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Gradiente Branco Fosco Ajustado para garantir leitura perfeita */
+        .card-link::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.7) 40%, rgba(255,255,255,0.05) 100%);
+            z-index: -1;
+            transition: background 0.6s ease;
+        }
+
+        /* Cards com foto de fundo: gradiente escuro para contraste com texto claro */
+        .item-orcamento::after {
+            background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0.05) 100%);
+        }
+
+        /* Card mais baixo: precisa de gradiente mais forte e mais cobertura para o texto respirar */
+        .item-projetos::after {
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.88) 55%, rgba(0,0,0,0.35) 100%);
+        }
+
+        /* Animações de Hover */
+        .card-link:hover, .card-link:focus { 
+            transform: translateY(-8px); 
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.1), 
+                0 4px 12px rgba(0, 0, 0, 0.03),
+                inset 0 1px 1px rgba(255, 255, 255, 1);
+            outline: none;
+        }
+        
+        .item-orcamento:hover::before, .item-orcamento:focus::before,
+        .item-projetos:hover::before, .item-projetos:focus::before {
+            filter: saturate(1.4) contrast(1.08) blur(10px); /* Blur mais intenso e premium no hover, mantendo a saturação */
+            transform: scale(1.03);
+        }
+
+        .card-link:hover::before, .card-link:focus::before {
+            filter: blur(10px); /* Blur mais intenso e premium no hover */
+            transform: scale(1.03);
+        }
+
+        .card-link:hover::after, .card-link:focus::after {
+            background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.85) 45%, rgba(255,255,255,0.2) 100%);
+        }
+
+        .item-orcamento:hover::after, .item-orcamento:focus::after {
+            background: linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.65) 45%, rgba(0,0,0,0.1) 100%);
+        }
+
+        .item-projetos:hover::after, .item-projetos:focus::after {
+            background: linear-gradient(to top, rgba(0,0,0,0.97) 0%, rgba(0,0,0,0.9) 55%, rgba(0,0,0,0.4) 100%);
+        }
+
+        /* Tipografia Refinada */
+        .card-eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #86868B;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .card-link h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.03em; /* Deixa o título mais sofisticado */
+            text-shadow: 0 1px 10px rgba(255,255,255,0.8);
+        }
+        
+        .card-link p {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.6; /* Mais respiro entre as linhas */
+            color: #424245; /* Cinza elegante, menos agressivo que o preto */
+            margin-bottom: 28px;
+            opacity: 0.95;
+            max-width: 38ch;
+        }
+
+        /* Botão interno escuro - Micro-interação na seta */
+        .btn-inner {
+            display: inline-flex;
+            align-items: center;
+            background: #1D1D1F;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 100rem;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            width: max-content;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .btn-inner span {
+            margin-left: 6px;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Animação exclusiva: o botão cresce um pouquinho e a seta anda pra direita */
+        .card-link:hover .btn-inner {
+            transform: scale(1.02); 
+            background: #000000;
+        }
+        .card-link:hover .btn-inner span {
+            transform: translateX(4px);
+        }
+
+        /* Botão claro para os cards com fundo de foto escuro */
+        .item-orcamento .btn-inner, .item-projetos .btn-inner {
+            background: #ffffff;
+            color: #1D1D1F;
+        }
+        .item-orcamento:hover .btn-inner, .item-orcamento:focus .btn-inner,
+        .item-projetos:hover .btn-inner, .item-projetos:focus .btn-inner {
+            background: #ffffff;
+        }
+
+        /* Imagens dos Cartões */
+        .item-orcamento { grid-column: 1; grid-row: span 2; min-height: 500px; }
+        .item-orcamento h2 { font-size: 38px; line-height: 1.08; }
+        .item-orcamento p { max-width: 30ch; }
+        .item-orcamento::before {
+            background-image: url('/imagens/bg-orcamento.jpg');
+            filter: saturate(1.4) contrast(1.08);
+        }
+        
+        .item-projetos { grid-column: 2; min-height: 236px; }
+        .item-projetos h2 { font-size: 24px; }
+        .item-projetos::before {
+            background-image: url('/imagens/bg-projetos.jpg');
+            filter: saturate(1.4) contrast(1.08);
+        }
+        
+        .item-portfolio { grid-column: 2; min-height: 236px; }
+        .item-portfolio h2 { font-size: 24px; }
+
+        /* Texto claro para os cards com foto de fundo (deve vir depois das regras base acima) */
+        .item-orcamento .card-eyebrow, .item-projetos .card-eyebrow { color: rgba(255,255,255,0.75); }
+        .item-orcamento h2, .item-projetos h2 { color: #ffffff; text-shadow: 0 1px 12px rgba(0,0,0,0.3); }
+        .item-orcamento p, .item-projetos p { color: rgba(255,255,255,0.88); }
+
+        /* Rodapé Minimalista */
+        footer { margin-top: 80px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+        .logo-texto { font-size: 22px; font-weight: 700; color: #1D1D1F; margin-bottom: 0; letter-spacing: -0.02em; }
+        footer > p { font-size: 13px; color: #86868B; font-weight: 400; }
+        
+        @media (max-width: 768px) {
+            .bento-grid { grid-template-columns: 1fr; }
+            .item-island { grid-column: 1; }
+            .item-orcamento, .item-projetos, .item-portfolio { grid-column: 1; }
+            .item-orcamento { min-height: 400px; }
+            .item-orcamento h2 { font-size: 30px; }
+            footer { margin-top: 48px; }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="bento-grid">
+        <div class="item-island">
+            <div id="dinamic-island">
+                <div class="island-avatar-wrap">
+                    <img src="/imagens/foto-julia.jpg" alt="Foto de perfil de Júlia Hendler">
+                    <span class="status-dot" aria-hidden="true"></span>
+                </div>
+                <div class="island-text">
+                    <strong>Júlia Hendler</strong>
+                    <span>Sites &amp; Projetos Culturais</span>
+                </div>
+            </div>
+        </div>
+
+        <a href="#" class="card-link item-orcamento" aria-label="Criar site com Júlia Hendler">
+            <span class="card-eyebrow">Desenvolvimento Web</span>
+            <h2>Crie o seu site<br>comigo</h2>
+            <p>Tenha uma presença online profissional, rápida e projetada para atrair e converter mais clientes para o seu negócio.</p>
+            <div class="btn-inner">Solicitar Orçamento <span>&rarr;</span></div>
+        </a>
+        
+        <a href="#" class="card-link item-projetos" aria-label="Escrita de Projetos Culturais">
+            <span class="card-eyebrow">Editais &amp; Captação</span>
+            <h2>Projetos Culturais</h2>
+            <p>Transformo a sua ideia num projeto claro e estratégico, pronto para ser aprovado em editais.</p>
+            <div class="btn-inner">Conhecer Serviço <span>&rarr;</span></div>
+        </a>
+        
+        <a href="#" class="card-link item-portfolio" aria-label="Aceder ao Portfólio de Júlia Hendler">
+            <span class="card-eyebrow">Trabalhos Anteriores</span>
+            <h2>O Meu Portfólio</h2>
+            <p>Explore os sites e trabalhos que já desenvolvi e veja na prática a qualidade das minhas entregas.</p>
+            <div class="btn-inner">Ver Trabalhos <span>&rarr;</span></div>
+        </a>
+
+    </main>
+
+    <footer>
+        <div class="logo-texto">Júlia Hendler</div>
+        <p>© 2026 - Todos os direitos reservados</p>
+    </footer>
+
+</body>
+</html>
